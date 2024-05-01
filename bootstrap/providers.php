@@ -1,3 +1,7 @@
 <?php
 
-return [];
+use App\NotificationSystem\Providers\NotificationSystemProvider;
+
+return [
+    NotificationSystemProvider::class,
+];

@@ -2,6 +2,7 @@
  
 namespace App\Documentation\Actions;
 
+use Illuminate\Support\Facades\Event;
 use Lorisleiva\Actions\Concerns\AsAction;
 use Lorisleiva\Actions\ActionRequest;
 use App\Documentation\Models\Document;
@@ -12,9 +13,17 @@ class CreateDocument {
 
     public function handle(string $title) {
         $document = new Document();
-        $document->title = $title;
+        $document['title'] = $title;
         $document->save();
-        return new DocumentResource($document);
+
+        $documentResource = new DocumentResource($document);
+
+        Event::dispatch('documentation.documentCreated', [
+            'documentation.documentCreated',
+            $documentResource,
+        ]);
+        
+        return $documentResource;
     }
 
     public function rules() {
