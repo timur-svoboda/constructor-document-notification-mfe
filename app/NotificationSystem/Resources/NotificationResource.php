@@ -2,18 +2,15 @@
  
 namespace App\NotificationSystem\Resources;
  
-use Illuminate\Http\Request;
-use Illuminate\Http\Resources\Json\JsonResource;
+use Spatie\LaravelData\Data;
  
-class NotificationResource extends JsonResource {
-    public function toArray(Request $request): array {
-        return [
-            'id' => $this->id,
-            'message' => $this->message,
-            'resourceId' => $this->resourceId,
-            'isRead' => (bool)$this->isRead,
-            'createdAt' => $this->createdAt,
-            'updatedAt' => $this->updatedAt,
-        ];
-    }
+class NotificationResource extends Data {
+    public function __construct(
+        public string $id,
+        public string $message,
+        public ?string $resourceId,
+        public bool $isRead,
+        public string $createdAt,
+        public string $updatedAt,
+    ) {}
 }

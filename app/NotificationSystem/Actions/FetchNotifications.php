@@ -16,7 +16,7 @@ class FetchNotifications {
             ->when($isRead !== null, fn ($query) => $query->where('isRead', $isRead))
             ->get();
 
-        return NotificationResource::collection($notifications);
+        return NotificationResource::collect($notifications);
     }
 
     public function rules() {

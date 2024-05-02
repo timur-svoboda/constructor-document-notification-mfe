@@ -5,7 +5,6 @@ namespace App\Constructor\Actions;
 use Lorisleiva\Actions\Concerns\AsAction;
 use App\Documentation\Events\DocumentCreated;
 use App\Constructor\Models\Node;
-use App\Constructor\Resources\NodeResource;
 
 class CreateNode {
     use AsAction;

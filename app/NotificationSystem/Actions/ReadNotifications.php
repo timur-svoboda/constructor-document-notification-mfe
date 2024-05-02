@@ -21,7 +21,7 @@ class ReadNotifications {
             $notification->save();
         }
 
-        return NotificationResource::collection($notifications);
+        return NotificationResource::collect($notifications);
     }
 
     public function rules() {

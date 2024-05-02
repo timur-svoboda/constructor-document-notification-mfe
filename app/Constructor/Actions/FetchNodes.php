@@ -12,7 +12,7 @@ class FetchNodes {
     public function handle() {
         $nodes = Node::all();
         
-        return NodeResource::collection($nodes);
+        return NodeResource::collect($nodes);
     }
 
     public function asController() {

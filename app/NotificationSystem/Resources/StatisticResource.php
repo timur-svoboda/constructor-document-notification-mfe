@@ -2,14 +2,11 @@
  
 namespace App\NotificationSystem\Resources;
  
-use Illuminate\Http\Request;
-use Illuminate\Http\Resources\Json\JsonResource;
+use Spatie\LaravelData\Data;
  
-class StatisticResource extends JsonResource {
-    public function toArray(Request $request): array {
-        return [
-            'id' => $this['id'],
-            'unreadNotificationCount' => $this['unreadNotificationCount'],
-        ];
-    }
+class StatisticResource extends Data {
+    public function __construct(
+        public string $id,
+        public int $unreadNotificationCount,
+    ) {}
 }

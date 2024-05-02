@@ -26,7 +26,7 @@ class FetchStatistics {
             ]);
         }
 
-        return StatisticResource::collection($statistics);
+        return StatisticResource::collect($statistics);
     }
 
     public function rules() {
