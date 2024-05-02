@@ -7,7 +7,7 @@ export type ReadNotificationsRequest = {
 
 export const readNotifications = async (
     request?: ReadNotificationsRequest
-): Promise<Notification> => {
+): Promise<Notification[]> => {
     return (
         await axios.patch("/api/notificationSystem/readNotifications", request)
     ).data;

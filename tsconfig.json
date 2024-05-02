@@ -33,6 +33,9 @@
             ],
             "@NotificationSystem/Components": [
                 "./resources/js/Modules/NotificationSystem/Components/Src/index.ts"
+            ],
+            "@NotificationSystem/Store": [
+                "./resources/js/Modules/NotificationSystem/Store/Src/index.ts"
             ]
         }
     },

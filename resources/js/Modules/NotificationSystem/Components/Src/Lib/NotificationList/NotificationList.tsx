@@ -1,29 +1,32 @@
+import { fetchNotifications, readNotifications } from "@NotificationSystem/API";
 import {
-    Notification,
-    fetchNotifications,
-    readNotifications,
-} from "@NotificationSystem/API";
-import { useEffect, useState } from "react";
+    connect,
+    notificationsFetched,
+    selectAllNotifications,
+    useDispatch,
+    useSelector,
+} from "@NotificationSystem/Store";
+import { useEffect, useMemo } from "react";
 import { NotificationItem } from "./Ui/NotificationItem";
 
-export const NotificationList = () => {
-    const [notifications, setNotifications] = useState<Notification[]>([]);
+export const NotificationList = connect(() => {
+    const dispatch = useDispatch();
+
+    const notifications = useSelector((state) => selectAllNotifications(state));
+
+    const unreadNotifications = useMemo(() => {
+        return notifications.filter(({ isRead }) => !isRead);
+    }, [notifications]);
 
     const handleReadAllButtonClick = () => {
         readNotifications();
     };
 
     useEffect(() => {
-        fetchNotifications({ isRead: false }).then((notifications) =>
-            setNotifications(
-                notifications.sort((a, b) => {
-                    const aCreatedAt = new Date(a.createdAt).valueOf();
-                    const bCreatedAt = new Date(b.createdAt).valueOf();
-                    return bCreatedAt - aCreatedAt;
-                })
-            )
-        );
-    }, []);
+        fetchNotifications({ isRead: false }).then((notifications) => {
+            dispatch(notificationsFetched(notifications));
+        });
+    }, [dispatch]);
 
     return (
         <div
@@ -37,10 +40,10 @@ export const NotificationList = () => {
             }}
         >
             <div style={{ color: "green" }}>Notification List</div>
-            {notifications.length > 0 && (
+            {unreadNotifications.length > 0 && (
                 <button onClick={handleReadAllButtonClick}>Read all</button>
             )}
-            {notifications.length === 0 && (
+            {unreadNotifications.length === 0 && (
                 <div style={{ display: "flex", justifyContent: "center" }}>
                     Empty
                 </div>
@@ -52,7 +55,7 @@ export const NotificationList = () => {
                     gap: "10px",
                 }}
             >
-                {notifications.map((notification) => (
+                {unreadNotifications.map((notification) => (
                     <NotificationItem
                         key={notification.id}
                         notification={notification}
@@ -61,4 +64,4 @@ export const NotificationList = () => {
             </div>
         </div>
     );
-};
+});

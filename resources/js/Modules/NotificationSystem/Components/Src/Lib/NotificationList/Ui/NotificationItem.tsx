@@ -1,12 +1,17 @@
 import { Notification, readNotifications } from "@NotificationSystem/API";
+import { notificationsRead, useDispatch } from "@NotificationSystem/Store";
 
 export type NotificationItemProps = {
     notification: Notification;
 };
 
 export const NotificationItem = (props: NotificationItemProps) => {
+    const dispatch = useDispatch();
+
     const handleReadButtonClick = () => {
-        readNotifications({ ids: [props.notification.id] });
+        readNotifications({ ids: [props.notification.id] }).then(
+            (notifications) => dispatch(notificationsRead(notifications))
+        );
     };
 
     return (
