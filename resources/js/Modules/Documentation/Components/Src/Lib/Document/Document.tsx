@@ -2,8 +2,10 @@ import {
     Document as DocumentType,
     deleteDocument,
     fetchDocuments,
+    updateDocument,
 } from "@Documentation/API";
-import { useEffect, useState } from "react";
+import React, { useEffect, useState } from "react";
+import TextareaAutosize from "react-textarea-autosize";
 
 export type DocumentProps = {
     id: string;
@@ -12,14 +14,28 @@ export type DocumentProps = {
 export const Document = (props: DocumentProps) => {
     const [document, setDocument] = useState<DocumentType | null>(null);
 
+    const [title, setTitle] = useState("");
+
     const handleDeleteButtonClick = () => {
         deleteDocument({ id: props.id });
     };
 
+    const handleTitleBlur = (event: React.FocusEvent<HTMLTextAreaElement>) => {
+        updateDocument({
+            id: props.id,
+            title: event.currentTarget.textContent || "",
+        });
+    };
+
     useEffect(() => {
-        fetchDocuments({ ids: [props.id] }).then((documents) =>
-            setDocument(documents.at(0) || null)
-        );
+        fetchDocuments({ ids: [props.id] }).then((documents) => {
+            const document = documents.at(0);
+
+            if (document) {
+                setDocument(document || null);
+                setTitle(document.title);
+            }
+        });
     }, [props.id]);
 
     if (!document) {
@@ -38,7 +54,18 @@ export const Document = (props: DocumentProps) => {
             }}
         >
             <div style={{ color: "blue" }}>Document</div>
-            <div>Title: {document.title}</div>
+            <TextareaAutosize
+                value={title}
+                onChange={(event) => setTitle(event.currentTarget.value)}
+                onBlur={handleTitleBlur}
+                style={{
+                    resize: "none",
+                    border: "none",
+                    fontSize: "16px",
+                    fontFamily: "serif",
+                    fontWeight: "bold",
+                }}
+            />
             <button onClick={handleDeleteButtonClick}>Delete</button>
         </div>
     );

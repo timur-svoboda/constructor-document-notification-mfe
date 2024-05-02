@@ -29,7 +29,14 @@ export const NotificationList = () => {
             }}
         >
             <div style={{ color: "green" }}>Notification List</div>
-            <button onClick={handleReadAllButtonClick}>Read all</button>
+            {notifications.length > 0 && (
+                <button onClick={handleReadAllButtonClick}>Read all</button>
+            )}
+            {notifications.length === 0 && (
+                <div style={{ display: "flex", justifyContent: "center" }}>
+                    Empty
+                </div>
+            )}
             <div
                 style={{
                     display: "flex",
