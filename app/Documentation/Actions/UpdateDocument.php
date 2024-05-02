@@ -15,7 +15,7 @@ class UpdateDocument {
     public function handle(string $id, string | null $title) {
         $document = Document::find($id);
 
-        $oldDocumentResource = new DocumentResource($document);
+        $oldDocumentResource = DocumentResource::from($document);
 
         $hasChanges = false;
 
@@ -26,7 +26,7 @@ class UpdateDocument {
 
         $document->save();
 
-        $newDocumentResource = new DocumentResource($document);
+        $newDocumentResource = DocumentResource::from($document);
 
         if ($hasChanges) {
             Event::dispatch(

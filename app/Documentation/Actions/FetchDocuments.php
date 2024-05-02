@@ -15,7 +15,7 @@ class FetchDocuments {
             ->when($ids, fn ($query) => $query->whereIn('id', $ids))
             ->get();
 
-        return DocumentResource::collection($documents);
+        return DocumentResource::collect($documents);
     }
 
     public function rules() {

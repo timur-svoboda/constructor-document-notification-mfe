@@ -13,7 +13,7 @@ import {
     useSelector,
 } from "@Documentation/Store";
 import { UnreadNotificationCounter } from "@NotificationSystem/Components";
-import React, { useEffect, useState } from "react";
+import { useEffect, useState } from "react";
 import TextareaAutosize from "react-textarea-autosize";
 
 export type DocumentProps = {
@@ -33,14 +33,12 @@ export const Document = connect((props: DocumentProps) => {
         dispatch(documentDeleted(await deleteDocument({ id: props.id })));
     };
 
-    const handleTitleBlur = async (
-        event: React.FocusEvent<HTMLTextAreaElement>
-    ) => {
+    const handleTitleBlur = async () => {
         dispatch(
             documentUpdated(
                 await updateDocument({
                     id: props.id,
-                    title: event.currentTarget.textContent || "",
+                    title,
                 })
             )
         );

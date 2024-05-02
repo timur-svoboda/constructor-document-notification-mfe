@@ -22,6 +22,9 @@
             "@Constructor/Components": [
                 "./resources/js/Modules/Constructor/Components/Src/index.ts"
             ],
+            "@Constructor/Store": [
+                "./resources/js/Modules/Constructor/Store/Src/index.ts"
+            ],
             "@Documentation/API": [
                 "./resources/js/Modules/Documentation/API/Src/index.ts"
             ],

@@ -15,7 +15,7 @@ class DeleteDocument {
     public function handle(string $id) {
         $document = Document::find($id);
 
-        $documentResource = new DocumentResource($document);
+        $documentResource = DocumentResource::from($document);
         
         $document->delete();
 

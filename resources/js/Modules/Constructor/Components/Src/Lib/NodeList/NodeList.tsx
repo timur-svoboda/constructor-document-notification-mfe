@@ -1,14 +1,23 @@
-import { Node, fetchNodes } from "@Constructor/API";
+import { fetchNodes } from "@Constructor/API";
+import {
+    connect,
+    nodesFetched,
+    selectAllNodes,
+    useDispatch,
+    useSelector,
+} from "@Constructor/Store";
 import { CreateDocumentForm } from "@Documentation/Components";
-import { useEffect, useState } from "react";
+import { useEffect } from "react";
 import { NodeItem } from "./Ui/NodeItem";
 
-export const NodeList = () => {
-    const [nodes, setNodes] = useState<Node[]>([]);
+export const NodeList = connect(() => {
+    const dispatch = useDispatch();
+
+    const nodes = useSelector(selectAllNodes);
 
     useEffect(() => {
-        fetchNodes().then(setNodes);
-    }, []);
+        fetchNodes().then((nodes) => dispatch(nodesFetched(nodes)));
+    }, [dispatch]);
 
     return (
         <div
@@ -35,4 +44,4 @@ export const NodeList = () => {
             </div>
         </div>
     );
-};
+});

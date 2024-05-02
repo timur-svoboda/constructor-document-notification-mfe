@@ -2,16 +2,13 @@
  
 namespace App\Documentation\Resources;
  
-use Illuminate\Http\Request;
-use Illuminate\Http\Resources\Json\JsonResource;
+use Spatie\LaravelData\Data;
  
-class DocumentResource extends JsonResource {
-    public function toArray(Request $request): array {
-        return [
-            'id' => $this->id,
-            'title' => $this->title,
-            'createdAt' => $this->createdAt,
-            'updatedAt' => $this->updatedAt,
-        ];
-    }
+class DocumentResource extends Data {
+    public function __construct(
+        public string $id,
+        public string $title,
+        public string $createdAt,
+        public string $updatedAt,
+    ) {}
 }

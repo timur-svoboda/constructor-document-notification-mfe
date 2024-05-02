@@ -17,7 +17,7 @@ class CreateDocument {
         $document->title = $title;
         $document->save();
 
-        $documentResource = new DocumentResource($document);
+        $documentResource = DocumentResource::from($document);
 
         Event::dispatch(
             new DocumentCreated(
