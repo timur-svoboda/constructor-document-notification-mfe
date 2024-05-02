@@ -1,8 +1,7 @@
-import { fetchStatistics } from "@NotificationSystem/API";
 import {
     connect,
     selectStatisticById,
-    statisticsFetched,
+    statisticsRequested,
     useDispatch,
     useSelector,
 } from "@NotificationSystem/Store";
@@ -21,9 +20,7 @@ export const UnreadNotificationCounter = connect(
         );
 
         useEffect(() => {
-            fetchStatistics({ ids: [props.id] }).then((statistics) =>
-                dispatch(statisticsFetched(statistics))
-            );
+            dispatch(statisticsRequested([props.id]));
         }, [dispatch, props.id]);
 
         if (!statistic) {

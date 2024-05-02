@@ -1,3 +1,4 @@
+export * from "./Lib/Actions/documentsActions";
 export * from "./Lib/Selectors/documentSelectors";
 export {
     documentCreated,

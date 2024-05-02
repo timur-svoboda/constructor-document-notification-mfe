@@ -1,16 +1,15 @@
 import {
     deleteDocument,
-    fetchDocuments,
-    updateDocument,
+    updateDocument
 } from "@Documentation/API";
 import {
     connect,
     documentDeleted,
     documentUpdated,
-    documentsFetched,
+    documentsRequested,
     selectDocumentById,
     useDispatch,
-    useSelector,
+    useSelector
 } from "@Documentation/Store";
 import { UnreadNotificationCounter } from "@NotificationSystem/Components";
 import { useEffect, useState } from "react";
@@ -45,9 +44,7 @@ export const Document = connect((props: DocumentProps) => {
     };
 
     useEffect(() => {
-        fetchDocuments({ ids: [props.id] }).then((documents) => {
-            dispatch(documentsFetched(documents));
-        });
+        dispatch(documentsRequested([props.id]));
     }, [dispatch, props.id]);
 
     useEffect(() => {
