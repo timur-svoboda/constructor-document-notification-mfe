@@ -4,6 +4,7 @@ namespace App\NotificationSystem\Actions;
 
 use Lorisleiva\Actions\Concerns\AsAction;
 use App\Documentation\Events\DocumentCreated;
+use App\Documentation\Events\DocumentDeleted;
 use App\NotificationSystem\Models\Notification;
 
 class CreateNotification {
@@ -20,6 +21,13 @@ class CreateNotification {
         if ($event instanceof DocumentCreated) {
             $this->handle(
                 message: 'Document "' . $event->documentResource->title . '" is created',
+                resourceId: $event->documentResource->id,
+            );
+        }
+
+        if ($event instanceof DocumentDeleted) {
+            $this->handle(
+                message: 'Document "' . $event->documentResource->title . '" is deleted',
                 resourceId: $event->documentResource->id,
             );
         }
