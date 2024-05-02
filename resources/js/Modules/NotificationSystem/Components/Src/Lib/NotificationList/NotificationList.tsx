@@ -14,7 +14,15 @@ export const NotificationList = () => {
     };
 
     useEffect(() => {
-        fetchNotifications({ isRead: false }).then(setNotifications);
+        fetchNotifications({ isRead: false }).then((notifications) =>
+            setNotifications(
+                notifications.sort((a, b) => {
+                    const aCreatedAt = new Date(a.createdAt).valueOf();
+                    const bCreatedAt = new Date(b.createdAt).valueOf();
+                    return bCreatedAt - aCreatedAt;
+                })
+            )
+        );
     }, []);
 
     return (

@@ -9,6 +9,8 @@ return new class extends Migration {
         Schema::create('documentation_documents', function (Blueprint $table) {
             $table->uuid('id')->primary();
             $table->string('title');
+            $table->timestamp('createdAt')->nullable();
+            $table->timestamp('updatedAt')->nullable();
         });
     }
 

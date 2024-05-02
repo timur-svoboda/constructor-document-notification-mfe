@@ -11,6 +11,8 @@ return new class extends Migration{
             $table->string('message');
             $table->uuid('resourceId')->nullable();
             $table->boolean('isRead');
+            $table->timestamp('createdAt')->nullable();
+            $table->timestamp('updatedAt')->nullable();
         });
     }
 

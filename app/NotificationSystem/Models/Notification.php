@@ -8,9 +8,10 @@ use Illuminate\Database\Eloquent\Concerns\HasUuids;
 class Notification extends Model {
     use HasUuids;
     
+    const CREATED_AT = 'createdAt';
+    const UPDATED_AT = 'updatedAt';
+    
     protected $table = 'notificationSystem_notifications';
-
-    public $timestamps = false;
 
     protected $attributes = [
         'isRead' => false,

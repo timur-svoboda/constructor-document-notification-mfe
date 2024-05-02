@@ -3,4 +3,6 @@ export type Notification = {
     message: string;
     resourceId: string | null;
     isRead: boolean;
+    createdAt: string;
+    updatedAt: string;
 };

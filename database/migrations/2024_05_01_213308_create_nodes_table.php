@@ -10,6 +10,8 @@ return new class extends Migration{
             $table->uuid('id')->primary();
             $table->string('type');
             $table->uuid('resourceId');
+            $table->timestamp('createdAt')->nullable();
+            $table->timestamp('updatedAt')->nullable();
         });
     }
 

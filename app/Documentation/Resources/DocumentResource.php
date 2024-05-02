@@ -10,6 +10,8 @@ class DocumentResource extends JsonResource {
         return [
             'id' => $this->id,
             'title' => $this->title,
+            'createdAt' => $this->createdAt,
+            'updatedAt' => $this->updatedAt,
         ];
     }
 }
