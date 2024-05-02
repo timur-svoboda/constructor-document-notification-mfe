@@ -23,6 +23,6 @@ class FetchDocumentsByIds {
     }
 
     public function asController(ActionRequest $request) {
-        return $this->handle($request->get('ids'));
+        return $this->handle(ids: $request->get('ids'));
     }
 }

@@ -3,6 +3,7 @@
 namespace App\NotificationSystem\Actions;
 
 use Lorisleiva\Actions\Concerns\AsAction;
+use App\Documentation\Events\DocumentCreated;
 use App\NotificationSystem\Models\Notification;
 
 class CreateNotification {
@@ -10,18 +11,16 @@ class CreateNotification {
 
     public function handle(string $message, string | null $resourceId = null) {
         $notification = new Notification();
-        $notification['message'] = $message;
-        $notification['resourceId'] = $resourceId;
+        $notification->message = $message;
+        $notification->resourceId = $resourceId;
         $notification->save();
     }
 
-    public function asListener($eventName, ...$parameters): void {
-        if ($eventName === 'documentation.documentCreated') {
-            $documentResource = $parameters[0];
-            
+    public function asListener($event): void {
+        if ($event instanceof DocumentCreated) {
             $this->handle(
-                message: 'Document "' . $documentResource->title . '" is created',
-                resourceId: $documentResource->id,
+                message: 'Document "' . $event->documentResource->title . '" is created',
+                resourceId: $event->documentResource->id,
             );
         }
     }

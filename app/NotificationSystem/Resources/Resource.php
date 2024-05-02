@@ -6,5 +6,9 @@ use Illuminate\Http\Request;
 use Illuminate\Http\Resources\Json\JsonResource;
  
 class Resource extends JsonResource {
-    public static $wrap = null;
+    public function __construct(...$parameters) {
+        parent::__construct(...$parameters);
+
+        $this->wrap(null);
+    }
 }
