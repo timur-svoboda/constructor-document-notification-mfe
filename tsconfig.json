@@ -15,7 +15,9 @@
         "incremental": true,
         "baseUrl": ".",
         "types": ["vite/client"],
-        "paths": {}
+        "paths": {
+            "@Constructor/Components": ["./resources/js/Modules/Constructor/Components/Src/index.ts"],
+        }
     },
     "include": ["**/*.ts", "**/*.tsx"],
     "exclude": ["node_modules"]

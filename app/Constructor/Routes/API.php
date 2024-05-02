@@ -1,6 +1,6 @@
 <?php
 
 use Illuminate\Support\Facades\Route;
-use App\Constructor\Actions\FetchAllNodes;
+use App\Constructor\Actions\FetchNodes;
 
-Route::get('fetchAllNodes', FetchAllNodes::class);
+Route::get('fetchNodes', FetchNodes::class);
