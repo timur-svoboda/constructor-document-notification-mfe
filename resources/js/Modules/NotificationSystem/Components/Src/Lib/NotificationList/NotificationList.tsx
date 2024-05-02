@@ -2,6 +2,7 @@ import { fetchNotifications, readNotifications } from "@NotificationSystem/API";
 import {
     connect,
     notificationsFetched,
+    notificationsRead,
     selectAllNotifications,
     useDispatch,
     useSelector,
@@ -18,8 +19,8 @@ export const NotificationList = connect(() => {
         return notifications.filter(({ isRead }) => !isRead);
     }, [notifications]);
 
-    const handleReadAllButtonClick = () => {
-        readNotifications();
+    const handleReadAllButtonClick = async () => {
+        dispatch(notificationsRead(await readNotifications()));
     };
 
     useEffect(() => {

@@ -1,9 +1,17 @@
 import {
-    Document as DocumentType,
     deleteDocument,
     fetchDocuments,
     updateDocument,
 } from "@Documentation/API";
+import {
+    connect,
+    documentDeleted,
+    documentUpdated,
+    documentsFetched,
+    selectDocumentById,
+    useDispatch,
+    useSelector,
+} from "@Documentation/Store";
 import { UnreadNotificationCounter } from "@NotificationSystem/Components";
 import React, { useEffect, useState } from "react";
 import TextareaAutosize from "react-textarea-autosize";
@@ -12,32 +20,43 @@ export type DocumentProps = {
     id: string;
 };
 
-export const Document = (props: DocumentProps) => {
-    const [document, setDocument] = useState<DocumentType | null>(null);
+export const Document = connect((props: DocumentProps) => {
+    const dispatch = useDispatch();
+
+    const document = useSelector((state) =>
+        selectDocumentById(state, props.id)
+    );
 
     const [title, setTitle] = useState("");
 
-    const handleDeleteButtonClick = () => {
-        deleteDocument({ id: props.id });
+    const handleDeleteButtonClick = async () => {
+        dispatch(documentDeleted(await deleteDocument({ id: props.id })));
     };
 
-    const handleTitleBlur = (event: React.FocusEvent<HTMLTextAreaElement>) => {
-        updateDocument({
-            id: props.id,
-            title: event.currentTarget.textContent || "",
-        });
+    const handleTitleBlur = async (
+        event: React.FocusEvent<HTMLTextAreaElement>
+    ) => {
+        dispatch(
+            documentUpdated(
+                await updateDocument({
+                    id: props.id,
+                    title: event.currentTarget.textContent || "",
+                })
+            )
+        );
     };
 
     useEffect(() => {
         fetchDocuments({ ids: [props.id] }).then((documents) => {
-            const document = documents.at(0);
-
-            if (document) {
-                setDocument(document || null);
-                setTitle(document.title);
-            }
+            dispatch(documentsFetched(documents));
         });
-    }, [props.id]);
+    }, [dispatch, props.id]);
+
+    useEffect(() => {
+        if (document) {
+            setTitle(document.title);
+        }
+    }, [document]);
 
     if (!document) {
         return null;
@@ -71,4 +90,4 @@ export const Document = (props: DocumentProps) => {
             <UnreadNotificationCounter id={document.id} />
         </div>
     );
-};
+});

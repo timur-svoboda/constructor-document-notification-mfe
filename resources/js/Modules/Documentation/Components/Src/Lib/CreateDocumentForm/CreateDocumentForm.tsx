@@ -1,17 +1,24 @@
-import { useState } from "react";
 import { createDocument } from "@Documentation/API";
+import { connect, documentCreated, useDispatch } from "@Documentation/Store";
+import { useState } from "react";
 
 export type CreateDocumentFormProps = {
     requestor?: string;
 };
 
-export const CreateDocumentForm = (props: CreateDocumentFormProps) => {
+export const CreateDocumentForm = connect((props: CreateDocumentFormProps) => {
+    const dispatch = useDispatch();
+
     const [title, setTitle] = useState("");
 
     const handleCreateButtonClick = async () => {
         setTitle("");
 
-        await createDocument({ title, requestor: props.requestor });
+        dispatch(
+            documentCreated(
+                await createDocument({ title, requestor: props.requestor })
+            )
+        );
     };
 
     return (
@@ -25,7 +32,7 @@ export const CreateDocumentForm = (props: CreateDocumentFormProps) => {
                 width: "300px",
             }}
         >
-            <div style={{ color: 'blue' }}>Create Document Form</div>
+            <div style={{ color: "blue" }}>Create Document Form</div>
             <input
                 value={title}
                 onChange={(event) => setTitle(event.currentTarget.value)}
@@ -33,4 +40,4 @@ export const CreateDocumentForm = (props: CreateDocumentFormProps) => {
             <button onClick={handleCreateButtonClick}>Create</button>
         </div>
     );
-};
+});

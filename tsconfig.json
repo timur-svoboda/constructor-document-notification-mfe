@@ -28,6 +28,9 @@
             "@Documentation/Components": [
                 "./resources/js/Modules/Documentation/Components/Src/index.ts"
             ],
+            "@Documentation/Store": [
+                "./resources/js/Modules/Documentation/Store/Src/index.ts"
+            ],
             "@NotificationSystem/API": [
                 "./resources/js/Modules/NotificationSystem/API/Src/index.ts"
             ],

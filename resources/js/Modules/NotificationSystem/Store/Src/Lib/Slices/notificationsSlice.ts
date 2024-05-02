@@ -10,7 +10,13 @@ export const notificationsSlice = createSlice({
             notificationAdapter.upsertMany(state, action.payload);
         },
         notificationsRead(state, action: PayloadAction<Notification[]>) {
-            notificationAdapter.upsertMany(state, action.payload);
+            notificationAdapter.updateMany(
+                state,
+                action.payload.map((notification) => ({
+                    id: notification.id,
+                    changes: notification,
+                }))
+            );
         },
     },
 });
