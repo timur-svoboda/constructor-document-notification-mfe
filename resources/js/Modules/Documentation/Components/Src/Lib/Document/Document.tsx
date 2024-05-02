@@ -4,6 +4,7 @@ import {
     fetchDocuments,
     updateDocument,
 } from "@Documentation/API";
+import { UnreadNotificationCounter } from "@NotificationSystem/Components";
 import React, { useEffect, useState } from "react";
 import TextareaAutosize from "react-textarea-autosize";
 
@@ -50,7 +51,7 @@ export const Document = (props: DocumentProps) => {
                 display: "flex",
                 flexDirection: "column",
                 gap: "10px",
-                width: "200px",
+                width: "300px",
             }}
         >
             <div style={{ color: "blue" }}>Document</div>
@@ -67,6 +68,7 @@ export const Document = (props: DocumentProps) => {
                 }}
             />
             <button onClick={handleDeleteButtonClick}>Delete</button>
+            <UnreadNotificationCounter id={document.id} />
         </div>
     );
 };

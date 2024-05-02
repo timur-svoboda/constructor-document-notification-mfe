@@ -26,6 +26,7 @@ export const NodeList = () => {
                 style={{
                     display: "flex",
                     gap: "10px",
+                    flexWrap: "wrap",
                 }}
             >
                 {nodes.map((node) => (
