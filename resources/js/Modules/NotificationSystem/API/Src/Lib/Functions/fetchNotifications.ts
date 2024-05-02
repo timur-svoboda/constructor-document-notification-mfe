@@ -3,12 +3,12 @@ import { Notification } from "../Entities/Notification";
 
 export type FetchNotificationsRequest = {
     resourceId?: string;
-    isRead?: string;
+    isRead?: boolean;
 };
 
 export const fetchNotifications = async (
-    request: FetchNotificationsRequest
+    request?: FetchNotificationsRequest
 ): Promise<Notification[]> => {
-    return (await axios.get("/api/v1/notificationSystem/fetchNotifications", { params: request }))
+    return (await axios.get("/api/notificationSystem/fetchNotifications", { params: request }))
         .data;
 };

@@ -6,7 +6,7 @@ use Lorisleiva\Actions\Concerns\AsAction;
 use App\Constructor\Models\Node;
 use App\Constructor\Resources\NodeResource;
 
-class FetchAllNodes {
+class FetchNodes {
     use AsAction;
 
     public function handle() {

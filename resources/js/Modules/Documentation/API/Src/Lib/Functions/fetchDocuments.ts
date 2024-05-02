@@ -8,6 +8,6 @@ export type FetchDocumentsRequest = {
 export const fetchDocuments = async (
     request: FetchDocumentsRequest
 ): Promise<Document[]> => {
-    return (await axios.get("/api/v1/documentation/fetchDocuments", { params: request }))
+    return (await axios.get("/api/documentation/fetchDocuments", { params: request }))
         .data;
 };

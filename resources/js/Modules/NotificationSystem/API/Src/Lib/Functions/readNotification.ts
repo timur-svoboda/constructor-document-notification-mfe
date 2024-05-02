@@ -10,7 +10,7 @@ export const readNotification = async (
 ): Promise<Notification> => {
     return (
         await axios.patch(
-            "/api/v1/notificationSystem/readNotification",
+            "/api/notificationSystem/readNotification",
             request
         )
     ).data;

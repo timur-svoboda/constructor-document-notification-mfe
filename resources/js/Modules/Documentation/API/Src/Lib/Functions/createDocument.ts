@@ -9,6 +9,6 @@ export type CreateDocumentRequest = {
 export const createDocument = async (
     request: CreateDocumentRequest
 ): Promise<Document> => {
-    return (await axios.post("/api/v1/documentation/createDocument", request))
+    return (await axios.post("/api/documentation/createDocument", request))
         .data;
 };

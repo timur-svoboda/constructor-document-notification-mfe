@@ -1,6 +1,6 @@
 {
     "compilerOptions": {
-        "target": "es2020",
+        "target": "es2022",
         "module": "es2020",
         "allowJs": true,
         "skipLibCheck": true,
@@ -16,7 +16,24 @@
         "baseUrl": ".",
         "types": ["vite/client"],
         "paths": {
-            "@Constructor/Components": ["./resources/js/Modules/Constructor/Components/Src/index.ts"],
+            "@Constructor/API": [
+                "./resources/js/Modules/Constructor/API/Src/index.ts"
+            ],
+            "@Constructor/Components": [
+                "./resources/js/Modules/Constructor/Components/Src/index.ts"
+            ],
+            "@Documentation/API": [
+                "./resources/js/Modules/Documentation/API/Src/index.ts"
+            ],
+            "@Documentation/Components": [
+                "./resources/js/Modules/Documentation/Components/Src/index.ts"
+            ],
+            "@NotificationSystem/API": [
+                "./resources/js/Modules/NotificationSystem/API/Src/index.ts"
+            ],
+            "@NotificationSystem/Components": [
+                "./resources/js/Modules/NotificationSystem/Components/Src/index.ts"
+            ]
         }
     },
     "include": ["**/*.ts", "**/*.tsx"],
