@@ -1,9 +1,17 @@
-import { Notification, fetchNotifications } from "@NotificationSystem/API";
+import {
+    Notification,
+    fetchNotifications,
+    readNotifications,
+} from "@NotificationSystem/API";
 import { useEffect, useState } from "react";
 import { NotificationItem } from "./Ui/NotificationItem";
 
 export const NotificationList = () => {
     const [notifications, setNotifications] = useState<Notification[]>([]);
+
+    const handleReadAllButtonClick = () => {
+        readNotifications();
+    };
 
     useEffect(() => {
         fetchNotifications({ isRead: false }).then(setNotifications);
@@ -21,6 +29,7 @@ export const NotificationList = () => {
             }}
         >
             <div style={{ color: "green" }}>Notification List</div>
+            <button onClick={handleReadAllButtonClick}>Read all</button>
             <div
                 style={{
                     display: "flex",

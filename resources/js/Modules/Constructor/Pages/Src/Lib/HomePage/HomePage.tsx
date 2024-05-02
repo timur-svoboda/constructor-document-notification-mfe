@@ -11,8 +11,8 @@ export const HomePage = () => {
                 gap: "10px",
             }}
         >
+            <div style={{ color: "red" }}>Constructor Template Page</div>
             <Link href="/constructor/template">Go to Template Page</Link>
-            <h1>Constructor Home Page</h1>
         </div>
     );
 };

@@ -1,4 +1,4 @@
-import { Notification, readNotification } from "@NotificationSystem/API";
+import { Notification, readNotifications } from "@NotificationSystem/API";
 
 export type NotificationItemProps = {
     notification: Notification;
@@ -6,7 +6,7 @@ export type NotificationItemProps = {
 
 export const NotificationItem = (props: NotificationItemProps) => {
     const handleReadButtonClick = () => {
-        readNotification({ id: props.notification.id });
+        readNotifications({ ids: [props.notification.id] });
     };
 
     return (
