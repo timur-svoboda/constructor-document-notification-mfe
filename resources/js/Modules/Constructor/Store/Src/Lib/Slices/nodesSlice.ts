@@ -9,9 +9,15 @@ export const nodesSlice = createSlice({
         nodesFetched(state, action: PayloadAction<Node[]>) {
             nodeAdapter.upsertMany(state, action.payload);
         },
+        nodeCreated(state, action: PayloadAction<Node>) {
+            nodeAdapter.addOne(state, action.payload);
+        },
+        nodeDeleted(state, action: PayloadAction<Node>) {
+            nodeAdapter.removeOne(state, action.payload.id);
+        },
     },
 });
 
-export const { nodesFetched } = nodesSlice.actions;
+export const { nodesFetched, nodeCreated, nodeDeleted } = nodesSlice.actions;
 
 export default nodesSlice.reducer;

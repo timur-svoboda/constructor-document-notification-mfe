@@ -1,6 +1,8 @@
 import { fetchNodes } from "@Constructor/API";
 import {
     connect,
+    nodeListeningCanceled,
+    nodeListeningRequested,
     nodesFetched,
     selectAllNodes,
     useDispatch,
@@ -17,6 +19,14 @@ export const NodeList = connect(() => {
 
     useEffect(() => {
         fetchNodes().then((nodes) => dispatch(nodesFetched(nodes)));
+    }, [dispatch]);
+
+    useEffect(() => {
+        dispatch(nodeListeningRequested());
+
+        return () => {
+            dispatch(nodeListeningCanceled());
+        };
     }, [dispatch]);
 
     return (

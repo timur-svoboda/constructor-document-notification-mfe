@@ -21,7 +21,7 @@ class FetchDocuments {
     public function rules() {
         return [
             'ids' => ['array'],
-            'ids.*' => ['exists:App\Documentation\Models\Document,id'],
+            'ids.*' => ['uuid'],
         ];
     }
 

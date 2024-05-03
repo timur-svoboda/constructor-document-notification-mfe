@@ -11,9 +11,7 @@ import { selectAllDocuments } from "./Selectors/documentSelectors";
 
 export const listenerMiddleware = createListenerMiddleware();
 
-export default listenerMiddleware;
-
-export const startAppListening =
+const startAppListening =
     listenerMiddleware.startListening as TypedStartListening<
         RootState,
         AppDispatch

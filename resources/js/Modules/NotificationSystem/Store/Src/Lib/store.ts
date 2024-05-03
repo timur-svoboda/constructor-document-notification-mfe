@@ -10,9 +10,9 @@ import { statisticsRequested } from "./Actions/statisticsActions";
 import { selectAllStatistics } from "./Selectors/statisticSelectors";
 import { statisticsFetched } from "./Slices/statisticsSlice";
 
-export const listenerMiddleware = createListenerMiddleware();
+const listenerMiddleware = createListenerMiddleware();
 
-export const startAppListening =
+const startAppListening =
     listenerMiddleware.startListening as TypedStartListening<
         RootState,
         AppDispatch
