@@ -21,6 +21,10 @@ class ReadNotifications {
             $notification->save();
         }
 
+        UpdateStatistics::make()->handle(
+            ids: $notifications->unique('resourceId')->pluck('resourceId')->toArray()
+        );
+
         return NotificationResource::collect($notifications);
     }
 

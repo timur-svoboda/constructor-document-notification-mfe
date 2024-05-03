@@ -1,4 +1,4 @@
-import { Notification, fetchStatistics } from "@NotificationSystem/API";
+import { Notification, Statistic, fetchStatistics } from "@NotificationSystem/API";
 import {
     TypedStartListening,
     configureStore,
@@ -10,12 +10,12 @@ import {
     notificationListeningCanceled,
     notificationListeningRequested,
 } from "./Actions/notificationsActions";
-import { statisticsRequested } from "./Actions/statisticsActions";
+import { statisticListeningCanceled, statisticListeningRequested, statisticsRequested } from "./Actions/statisticsActions";
 import { selectAllStatistics } from "./Selectors/statisticSelectors";
 import notificationsSlice, {
     notificationCreated,
 } from "./Slices/notificationsSlice";
-import statisticSlice, { statisticsFetched } from "./Slices/statisticsSlice";
+import statisticSlice, { statisticsFetched, statisticsUpdated } from "./Slices/statisticsSlice";
 
 const echo = new Echo({
     broadcaster: "reverb",
@@ -94,6 +94,37 @@ startListening({
 
         if (notificationListeningRequestorCount === 0) {
             echo.leave("notificationSystem.notifications");
+        }
+    },
+});
+
+let statisticListeningRequestorCount = 0;
+
+startListening({
+    actionCreator: statisticListeningRequested,
+    effect: (action, listenerApi) => {
+        if (statisticListeningRequestorCount === 0) {
+            echo.channel("notificationSystem.statistics").listen(
+                ".statisticsUpdated",
+                (event: { statisticResources: Statistic[] }) => {
+                    listenerApi.dispatch(
+                        statisticsUpdated(event.statisticResources)
+                    );
+                }
+            );
+        }
+
+        statisticListeningRequestorCount += 1;
+    },
+});
+
+startListening({
+    actionCreator: statisticListeningCanceled,
+    effect: () => {
+        statisticListeningRequestorCount -= 1;
+
+        if (statisticListeningRequestorCount === 0) {
+            echo.leave("notificationSystem.statistics");
         }
     },
 });

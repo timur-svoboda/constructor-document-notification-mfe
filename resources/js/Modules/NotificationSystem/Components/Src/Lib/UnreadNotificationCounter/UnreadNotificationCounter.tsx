@@ -1,6 +1,8 @@
 import {
     connect,
     selectStatisticById,
+    statisticListeningCanceled,
+    statisticListeningRequested,
     statisticsRequested,
     useDispatch,
     useSelector,
@@ -22,6 +24,14 @@ export const UnreadNotificationCounter = connect(
         useEffect(() => {
             dispatch(statisticsRequested([props.id]));
         }, [dispatch, props.id]);
+
+        useEffect(() => {
+            dispatch(statisticListeningRequested());
+
+            return () => {
+                dispatch(statisticListeningCanceled());
+            };
+        }, [dispatch]);
 
         if (!statistic) {
             return null;

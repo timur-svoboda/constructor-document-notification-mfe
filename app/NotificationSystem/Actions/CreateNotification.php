@@ -27,6 +27,8 @@ class CreateNotification {
                 notificationResource: $notificationResource,
             )
         );
+
+        UpdateStatistics::make()->handle(ids: [$notificationResource->resourceId]);
     }
 
     public function asListener($event): void {

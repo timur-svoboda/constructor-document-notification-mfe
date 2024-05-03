@@ -9,9 +9,12 @@ export const statisticSlice = createSlice({
         statisticsFetched(state, action: PayloadAction<Statistic[]>) {
             statisticAdapter.upsertMany(state, action.payload);
         },
+        statisticsUpdated(state, action: PayloadAction<Statistic[]>) {
+            statisticAdapter.upsertMany(state, action.payload);
+        },
     },
 });
 
-export const { statisticsFetched } = statisticSlice.actions;
+export const { statisticsFetched, statisticsUpdated } = statisticSlice.actions;
 
 export default statisticSlice.reducer;
