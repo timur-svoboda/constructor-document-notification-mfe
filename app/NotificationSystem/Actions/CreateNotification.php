@@ -2,11 +2,14 @@
  
 namespace App\NotificationSystem\Actions;
 
+use Illuminate\Support\Facades\Event;
 use Lorisleiva\Actions\Concerns\AsAction;
 use App\Documentation\Events\DocumentCreated;
 use App\Documentation\Events\DocumentUpdated;
 use App\Documentation\Events\DocumentDeleted;
 use App\NotificationSystem\Models\Notification;
+use App\NotificationSystem\Resources\NotificationResource;
+use App\NotificationSystem\Events\NotificationCreated;
 
 class CreateNotification {
     use AsAction;
@@ -16,6 +19,14 @@ class CreateNotification {
         $notification->message = $message;
         $notification->resourceId = $resourceId;
         $notification->save();
+
+        $notificationResource = NotificationResource::from($notification);
+
+        Event::dispatch(
+            new NotificationCreated(
+                notificationResource: $notificationResource,
+            )
+        );
     }
 
     public function asListener($event): void {

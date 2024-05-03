@@ -1,3 +1,4 @@
+export * from "./Lib/Actions/notificationsActions";
 export * from "./Lib/Actions/statisticsActions";
 export * from "./Lib/Selectors/notificationSelectors";
 export * from "./Lib/Selectors/statisticSelectors";

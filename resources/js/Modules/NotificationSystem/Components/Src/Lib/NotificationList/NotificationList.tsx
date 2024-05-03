@@ -1,6 +1,8 @@
 import { fetchNotifications, readNotifications } from "@NotificationSystem/API";
 import {
     connect,
+    notificationListeningCanceled,
+    notificationListeningRequested,
     notificationsFetched,
     notificationsRead,
     selectAllNotifications,
@@ -27,6 +29,14 @@ export const NotificationList = connect(() => {
         fetchNotifications({ isRead: false }).then((notifications) => {
             dispatch(notificationsFetched(notifications));
         });
+    }, [dispatch]);
+
+    useEffect(() => {
+        dispatch(notificationListeningRequested());
+
+        return () => {
+            dispatch(notificationListeningCanceled());
+        };
     }, [dispatch]);
 
     return (

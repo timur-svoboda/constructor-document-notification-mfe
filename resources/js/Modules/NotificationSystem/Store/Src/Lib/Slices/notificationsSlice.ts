@@ -18,10 +18,13 @@ export const notificationsSlice = createSlice({
                 }))
             );
         },
+        notificationCreated(state, action: PayloadAction<Notification>) {
+            notificationAdapter.addOne(state, action.payload);
+        },
     },
 });
 
-export const { notificationsFetched, notificationsRead } =
+export const { notificationsFetched, notificationsRead, notificationCreated } =
     notificationsSlice.actions;
 
 export default notificationsSlice.reducer;
