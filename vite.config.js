@@ -6,7 +6,7 @@ import tsconfigPaths from 'vite-tsconfig-paths'
 export default defineConfig({
     plugins: [
         laravel({
-            input: [],
+            input: ["resources/js/app.tsx"],
             refresh: true,
         }),
         react(),
