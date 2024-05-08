@@ -1,7 +1,8 @@
 <?php
 
 use Illuminate\Support\Facades\Route;
-use Inertia\Inertia;
+use App\Constructor\Pages\HomePage;
+use App\Constructor\Pages\TemplatePage;
 
-Route::get('/', fn () => Inertia::render('Constructor/Pages/Src/Lib/HomePage/HomePage'));
-Route::get('/template', fn () => Inertia::render('Constructor/Pages/Src/Lib/TemplatePage/TemplatePage'));
+Route::get('/', HomePage::class);
+Route::get('/template', TemplatePage::class);

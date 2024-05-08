@@ -1,22 +1,27 @@
 import {
+    Document as DocumentResource,
     deleteDocument,
-    updateDocument
+    updateDocument,
 } from "@Documentation/API";
 import {
     connect,
     documentDeleted,
     documentUpdated,
+    documentsFetched,
     documentsRequested,
     selectDocumentById,
     useDispatch,
-    useSelector
+    useSelector,
 } from "@Documentation/Store";
+import { Statistic } from "@NotificationSystem/API";
 import { UnreadNotificationCounter } from "@NotificationSystem/Components";
 import { useEffect, useState } from "react";
 import TextareaAutosize from "react-textarea-autosize";
 
 export type DocumentProps = {
     id: string;
+    initDocument?: DocumentResource;
+    initialStatistics?: Statistic[];
 };
 
 export const Document = connect((props: DocumentProps) => {
@@ -44,8 +49,12 @@ export const Document = connect((props: DocumentProps) => {
     };
 
     useEffect(() => {
-        dispatch(documentsRequested([props.id]));
-    }, [dispatch, props.id]);
+        if (!props.initDocument) {
+            dispatch(documentsRequested([props.id]));
+        } else {
+            dispatch(documentsFetched([props.initDocument]));
+        }
+    }, [dispatch, props.id, props.initDocument]);
 
     useEffect(() => {
         if (document) {
@@ -82,7 +91,12 @@ export const Document = connect((props: DocumentProps) => {
                 }}
             />
             <button onClick={handleDeleteButtonClick}>Delete</button>
-            <UnreadNotificationCounter id={document.id} />
+            <UnreadNotificationCounter
+                statisticId={document.id}
+                initStatistic={props.initialStatistics?.find(
+                    (statistic) => props.initDocument?.id === statistic.id
+                )}
+            />
         </div>
     );
 });

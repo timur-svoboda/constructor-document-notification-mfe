@@ -1,8 +1,18 @@
 import { Link } from "@inertiajs/react";
 import { NodeList } from "@Constructor/Components";
 import { NotificationList } from "@NotificationSystem/Components";
+import { Node } from "@Constructor/API";
+import { Document } from "@Documentation/API";
+import { Notification, Statistic } from "@NotificationSystem/API";
 
-export const TemplatePage = () => {
+export type TemplatePageProps = {
+    nodes: Node[];
+    documents: Document[];
+    statistics: Statistic[];
+    notifications: Notification[];
+};
+
+export const TemplatePage = (props: TemplatePageProps) => {
     return (
         <div
             style={{
@@ -15,8 +25,12 @@ export const TemplatePage = () => {
         >
             <div style={{ color: "red" }}>Constructor Template Page</div>
             <Link href="/constructor">Go to Home Page</Link>
-            <NodeList />
-            <NotificationList />
+            <NodeList
+                initNodes={props.nodes}
+                initDocuments={props.documents}
+                initialStatistics={props.statistics}
+            />
+            <NotificationList initNotifications={props.notifications} />
         </div>
     );
 };

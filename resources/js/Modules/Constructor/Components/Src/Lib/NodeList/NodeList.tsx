@@ -1,4 +1,4 @@
-import { fetchNodes } from "@Constructor/API";
+import { Node, fetchNodes } from "@Constructor/API";
 import {
     connect,
     nodeListeningCanceled,
@@ -11,15 +11,27 @@ import {
 import { CreateDocumentForm } from "@Documentation/Components";
 import { useEffect } from "react";
 import { NodeItem } from "./Ui/NodeItem";
+import { Document } from "@Documentation/API";
+import { Statistic } from "@NotificationSystem/API";
 
-export const NodeList = connect(() => {
+export type NodeListProps = {
+    initNodes?: Node[];
+    initDocuments?: Document[];
+    initialStatistics?: Statistic[];
+};
+
+export const NodeList = connect((props: NodeListProps) => {
     const dispatch = useDispatch();
 
     const nodes = useSelector(selectAllNodes);
 
     useEffect(() => {
-        fetchNodes().then((nodes) => dispatch(nodesFetched(nodes)));
-    }, [dispatch]);
+        if (!props.initNodes) {
+            fetchNodes().then((nodes) => dispatch(nodesFetched(nodes)));
+        } else {
+            dispatch(nodesFetched(props.initNodes));
+        }
+    }, [dispatch, props.initNodes]);
 
     useEffect(() => {
         dispatch(nodeListeningRequested());
@@ -49,7 +61,12 @@ export const NodeList = connect(() => {
                 }}
             >
                 {nodes.map((node) => (
-                    <NodeItem key={node.id} node={node} />
+                    <NodeItem
+                        key={node.id}
+                        node={node}
+                        initDocuments={props.initDocuments}
+                        initialStatistics={props.initialStatistics}
+                    />
                 ))}
             </div>
         </div>

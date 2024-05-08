@@ -1,8 +1,10 @@
+import { Statistic } from "@NotificationSystem/API";
 import {
     connect,
     selectStatisticById,
     statisticListeningCanceled,
     statisticListeningRequested,
+    statisticsFetched,
     statisticsRequested,
     useDispatch,
     useSelector,
@@ -10,7 +12,8 @@ import {
 import { useEffect } from "react";
 
 export type UnreadNotificationCounterProps = {
-    id: string;
+    statisticId: string;
+    initStatistic?: Statistic;
 };
 
 export const UnreadNotificationCounter = connect(
@@ -18,12 +21,16 @@ export const UnreadNotificationCounter = connect(
         const dispatch = useDispatch();
 
         const statistic = useSelector((state) =>
-            selectStatisticById(state, props.id)
+            selectStatisticById(state, props.statisticId)
         );
 
         useEffect(() => {
-            dispatch(statisticsRequested([props.id]));
-        }, [dispatch, props.id]);
+            if (!props.initStatistic) {
+                dispatch(statisticsRequested([props.statisticId]));
+            } else {
+                dispatch(statisticsFetched([props.initStatistic]));
+            }
+        }, [dispatch, props.initStatistic, props.statisticId]);
 
         useEffect(() => {
             dispatch(statisticListeningRequested());

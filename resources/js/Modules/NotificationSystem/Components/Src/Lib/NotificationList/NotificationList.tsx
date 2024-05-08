@@ -1,4 +1,4 @@
-import { fetchNotifications, readNotifications } from "@NotificationSystem/API";
+import { Notification, fetchNotifications, readNotifications } from "@NotificationSystem/API";
 import {
     connect,
     notificationListeningCanceled,
@@ -12,7 +12,11 @@ import {
 import { useEffect, useMemo } from "react";
 import { NotificationItem } from "./Ui/NotificationItem";
 
-export const NotificationList = connect(() => {
+export type NotificationListProps = {
+    initNotifications?: Notification[]
+}
+
+export const NotificationList = connect((props: NotificationListProps) => {
     const dispatch = useDispatch();
 
     const notifications = useSelector((state) => selectAllNotifications(state));
@@ -26,10 +30,14 @@ export const NotificationList = connect(() => {
     };
 
     useEffect(() => {
-        fetchNotifications({ isRead: false }).then((notifications) => {
-            dispatch(notificationsFetched(notifications));
-        });
-    }, [dispatch]);
+        if (!props.initNotifications) {
+            fetchNotifications({ isRead: false }).then((notifications) => {
+                dispatch(notificationsFetched(notifications));
+            });
+        } else {
+            dispatch(notificationsFetched(props.initNotifications));
+        }
+    }, [dispatch, props.initNotifications]);
 
     useEffect(() => {
         dispatch(notificationListeningRequested());
