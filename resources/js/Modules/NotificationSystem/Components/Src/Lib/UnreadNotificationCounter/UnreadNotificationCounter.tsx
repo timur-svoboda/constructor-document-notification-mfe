@@ -20,9 +20,10 @@ export const UnreadNotificationCounter = connect(
     (props: UnreadNotificationCounterProps) => {
         const dispatch = useDispatch();
 
-        const statistic = useSelector((state) =>
-            selectStatisticById(state, props.statisticId)
-        );
+        const statistic =
+            useSelector((state) =>
+                selectStatisticById(state, props.statisticId)
+            ) || props.initStatistic;
 
         useEffect(() => {
             if (!props.initStatistic) {

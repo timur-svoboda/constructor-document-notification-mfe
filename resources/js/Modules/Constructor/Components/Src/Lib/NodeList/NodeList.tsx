@@ -23,7 +23,9 @@ export type NodeListProps = {
 export const NodeList = connect((props: NodeListProps) => {
     const dispatch = useDispatch();
 
-    const nodes = useSelector(selectAllNodes);
+    let nodes = useSelector(selectAllNodes);
+
+    nodes = nodes.length === 0 ? props.initNodes ?? [] : nodes;
 
     useEffect(() => {
         if (!props.initNodes) {

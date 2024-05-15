@@ -4,8 +4,6 @@ import {
     configureStore,
     createListenerMiddleware,
 } from "@reduxjs/toolkit";
-import Echo from "laravel-echo";
-import "pusher-js";
 import {
     notificationListeningCanceled,
     notificationListeningRequested,
@@ -16,16 +14,6 @@ import notificationsSlice, {
     notificationCreated,
 } from "./Slices/notificationsSlice";
 import statisticSlice, { statisticsFetched, statisticsUpdated } from "./Slices/statisticsSlice";
-
-const echo = new Echo({
-    broadcaster: "reverb",
-    key: import.meta.env.VITE_REVERB_APP_KEY,
-    wsHost: import.meta.env.VITE_REVERB_HOST,
-    wsPort: import.meta.env.VITE_REVERB_PORT ?? 80,
-    wssPort: import.meta.env.VITE_REVERB_PORT ?? 443,
-    forceTLS: (import.meta.env.VITE_REVERB_SCHEME ?? "https") === "https",
-    enabledTransports: ["ws", "wss"],
-});
 
 const listenerMiddleware = createListenerMiddleware();
 
@@ -73,7 +61,7 @@ startListening({
     actionCreator: notificationListeningRequested,
     effect: (action, listenerApi) => {
         if (notificationListeningRequestorCount === 0) {
-            echo.channel("notificationSystem.notifications").listen(
+           window.Echo.channel("notificationSystem.notifications").listen(
                 ".notificationCreated",
                 (event: { notificationResource: Notification }) => {
                     listenerApi.dispatch(
@@ -93,7 +81,7 @@ startListening({
         notificationListeningRequestorCount -= 1;
 
         if (notificationListeningRequestorCount === 0) {
-            echo.leave("notificationSystem.notifications");
+            window.Echo.leave("notificationSystem.notifications");
         }
     },
 });
@@ -104,7 +92,7 @@ startListening({
     actionCreator: statisticListeningRequested,
     effect: (action, listenerApi) => {
         if (statisticListeningRequestorCount === 0) {
-            echo.channel("notificationSystem.statistics").listen(
+            window.Echo.channel("notificationSystem.statistics").listen(
                 ".statisticsUpdated",
                 (event: { statisticResources: Statistic[] }) => {
                     listenerApi.dispatch(
@@ -124,7 +112,7 @@ startListening({
         statisticListeningRequestorCount -= 1;
 
         if (statisticListeningRequestorCount === 0) {
-            echo.leave("notificationSystem.statistics");
+            window.Echo.leave("notificationSystem.statistics");
         }
     },
 });

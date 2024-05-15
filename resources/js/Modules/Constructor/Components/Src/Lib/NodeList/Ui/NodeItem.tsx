@@ -18,7 +18,9 @@ export const NodeItem = (props: NodeItemProps) => {
                     initDocument={props.initDocuments?.find(
                         (document) => props.node.resourceId === document.id
                     )}
-                    initialStatistics={props.initialStatistics}
+                    initialStatistic={props.initialStatistics?.find(
+                        (statistic) => props.node.resourceId === statistic.id
+                    )}
                 />
             );
         default:

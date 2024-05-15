@@ -21,17 +21,17 @@ import TextareaAutosize from "react-textarea-autosize";
 export type DocumentProps = {
     id: string;
     initDocument?: DocumentResource;
-    initialStatistics?: Statistic[];
+    initialStatistic?: Statistic;
 };
 
 export const Document = connect((props: DocumentProps) => {
     const dispatch = useDispatch();
 
-    const document = useSelector((state) =>
-        selectDocumentById(state, props.id)
-    );
+    const document =
+        useSelector((state) => selectDocumentById(state, props.id)) ||
+        props.initDocument;
 
-    const [title, setTitle] = useState("");
+    const [title, setTitle] = useState(document?.title || "");
 
     const handleDeleteButtonClick = async () => {
         dispatch(documentDeleted(await deleteDocument({ id: props.id })));
@@ -93,9 +93,7 @@ export const Document = connect((props: DocumentProps) => {
             <button onClick={handleDeleteButtonClick}>Delete</button>
             <UnreadNotificationCounter
                 statisticId={document.id}
-                initStatistic={props.initialStatistics?.find(
-                    (statistic) => props.initDocument?.id === statistic.id
-                )}
+                initStatistic={props.initialStatistic}
             />
         </div>
     );
