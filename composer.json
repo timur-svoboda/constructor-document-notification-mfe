@@ -7,6 +7,7 @@
     "require": {
         "php": "^8.2",
         "inertiajs/inertia-laravel": "^1.0",
+        "laravel/forge-cli": "^1.8",
         "laravel/framework": "^11.0",
         "laravel/reverb": "@beta",
         "laravel/sanctum": "^4.0",
